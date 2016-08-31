@@ -8,7 +8,7 @@ import maya.cmds as cmds
 
 parser = argparse.ArgumentParser(description='Repath script')
 parser.add_argument('--path', '-p', action='store', dest='path', help='Define path of root folder')
-parser.add_argument('--backup', '-b', action='store_true', default=False, dest='backup', help='Save file to name_edit.mb')
+parser.add_argument('--backup', '-ba', action='store_true', default=False, dest='backup', help='Save file to name_edit.mb')
 parser.add_argument('--recursive', '-r', action='store_true', default=False, dest='recursive', help='Recursive search mb file')
 parser.add_argument('content', nargs='+', help='First element is search, second is replace; example: C:/ Q:/, it will replace C:/ by Q:/')
 
