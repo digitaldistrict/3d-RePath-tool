@@ -35,10 +35,18 @@ if not files:
 
 for file in files:
     print '> Open file : {0}'.format(file)
-    hou.hipFile.load(file_name=file, ignore_load_warnings=True)
-
+    
+    try:
+        hou.hipFile.load(file_name=file, ignore_load_warnings=True)
+    except:
+        print 'Can\'t open this file.'
+        continue
+    
     for c in content:
-        hou.hscript("opchange -i {0} {1}".format(c['s'], c['r']))
+        try:
+            hou.hscript("opchange -i {0} {1}".format(c['s'], c['r']))
+        except:
+            print 'Can\'t replace {0} by {1}'.format(c['s'], c['r'])
     
     if args.backup:
         name, ext = os.path.splitext(file)

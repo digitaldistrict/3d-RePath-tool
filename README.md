@@ -31,7 +31,7 @@ pathToMaya\bin\mayapy.exe script_maya.py -h
 ### Example
 
 ```
-pathToMaya\bin\mayapy.exe script_maya.py -p 'C:/mayaScene/' -r 'C:/oldprojet' 'C:/mayaScene' 'D:/object' 'C:/mayaScene/object'
+pathToMaya\bin\mayapy.exe script_maya.py -p "C:/mayaScene/" -r "C:/oldprojet" "C:/mayaScene" "D:/object" "C:/mayaScene/object"
 ```
 Search into C:/mayaScene recursively maya scene, open them, search C:/oldproject or D:/object path, if it found them, then replace by C:/mayaScene or C:/mayaScene/object.
 
@@ -50,7 +50,7 @@ pathToHoudini\bin\hython.exe script_houdini.py -h
 ### Example
 
 ```
-pathToHoudini\bin\hython.exe script_houdini.py -p 'C:/houdini' -r 'C:/oldprojet' 'C:/houdini' 'D:/object' 'C:/houdini/object'
+pathToHoudini\bin\hython.exe script_houdini.py -p "C:/houdini" -r "C:/oldprojet" "C:/houdini" "D:/object" "C:/houdini/object"
 ```
 Search into C:/houdini recursively houdini scene, open them, replace all occurences C:/oldproject by C:/houdini and D:/object by C:/houdini/object.
 
@@ -59,7 +59,7 @@ Search into C:/houdini recursively houdini scene, open them, replace all occuren
 
 | Short   | Long        | Description                                                                              |
 |---------|-------------|------------------------------------------------------------------------------------------|
-| -p      | --path      | Define path of root folder                                                               |
+| -p      | --path      | Define path of root folder /!\ Important use unix slashes /!\                            |
 | -ba     | --backup    | Save file to name_edit.mb                                                                |
-| -r      | --recursive | Recursive search maya file                                                               |
+| -r      | --recursive | Recursive search scene file                                                              |
 | content |             | First element is search, second is replace; example: C:/ Q:/, it will replace C:/ by Q:/ |

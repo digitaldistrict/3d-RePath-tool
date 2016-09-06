@@ -38,7 +38,13 @@ if not files:
 
 for file in files:
     print '> Open file : {0}'.format(file)
-    cmds.file(file, force=True, open=True)
+    
+    try:
+        cmds.file(file, force=True, open=True, ignoreVersion=True)
+    except:
+        print 'Can\'t open this file.'
+        continue
+        
     subdir = cmds.filePathEditor(query=True, listDirectories="")
     
     if subdir:
@@ -51,12 +57,21 @@ for file in files:
                 print '>> Path to replace : {0}'.format(d)
                 
                 # get nodes
-                nodes = cmds.filePathEditor(query=True, listFiles=d, withAttribute=True)
-                nodes = [nodes[i] for i in range(1, nodes.__len__(), 2)]
+                try:
+                    nodes = cmds.filePathEditor(query=True, listFiles=d, withAttribute=True)
+                    nodes = [nodes[i] for i in range(1, nodes.__len__(), 2)]
+                except:
+                    print 'Can\'t find node path'
+                    continue
                 
                 # repath them
                 repath = d.replace(match['s'], match['r'])
-                cmds.filePathEditor(*nodes, repath=repath, force=True)
+                
+                try:
+                    cmds.filePathEditor(*nodes, repath=repath, force=True)
+                except:
+                    print 'Can\'t replace path by {0}'.format(repath)
+                    continue
 
         # rename current file
         if args.backup:
