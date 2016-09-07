@@ -28,6 +28,7 @@ parser.add_argument(
 parser.add_argument(
     '--exclude', '-e', 
     nargs='+', 
+    default=[],
     help='Exclude folder for recursion')
 parser.add_argument(
     '--content', '-c',
