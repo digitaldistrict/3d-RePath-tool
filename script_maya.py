@@ -7,34 +7,64 @@ import os
 import maya.cmds as cmds
 
 parser = argparse.ArgumentParser(description='Repath script')
-parser.add_argument('--path', '-p', action='store', dest='path', help='Define path of root folder')
-parser.add_argument('--backup', '-ba', action='store_true', default=False, dest='backup', help='Save file to name_edit.mb')
-parser.add_argument('--recursive', '-r', action='store_true', default=False, dest='recursive', help='Recursive search mb file')
-parser.add_argument('content', nargs='+', help='First element is search, second is replace; example: C:/ Q:/, it will replace C:/ by Q:/')
+parser.add_argument(
+    '--path', '-p', 
+    action='store', 
+    dest='path', 
+    help='Define path of root folder', 
+    required=True)
+parser.add_argument(
+    '--backup', '-ba', 
+    action='store_true', 
+    default=False, 
+    dest='backup', 
+    help='Save file to name_edit.mb')
+parser.add_argument(
+    '--recursive', '-r', 
+    action='store_true', 
+    default=False, 
+    dest='recursive', 
+    help='Recursive search mb file')
+parser.add_argument(
+    '--exclude', '-e', 
+    nargs='+', 
+    help='Exclude folder for recursion')
+parser.add_argument(
+    '--content', '-c',
+    nargs='+', 
+    help='First element is search, second is replace; example: C:/ Q:/, it will replace C:/ by Q:/')
 
 args = parser.parse_args()
+args.path = args.path.replace('\\', '/')
 
-if not args.path or not args.content:
-    print 'Path and content is required'
-    sys.exit()
+def getSceneFile(args):
+    files = []
+    
+    # search files
+    if args.recursive:
+        for root, dirs, f in os.walk(args.path):
+            dirs[:] = [d for d in dirs if d not in args.exclude]
+                
+            for file in f:
+                if file.endswith('.mb'):
+                    files.append(os.path.join(root, file))
+    else:
+        for file in [f for f in os.listdir(args.path) if f.endswith('.mb')]:
+            files.append(os.path.join(args.path, file))
+
+    if not files:
+        print 'Houdini file not found (.mb)'
+        sys.exit()
+        
+    return files
+
+files = getSceneFile(args)
 
 # convert search replace by {'s': search, 'r': replace}
-content = [{'s': args.content[i], 'r': args.content[i+1]} for i in range(0, args.content.__len__(), 2)]
-files = []
-
-# search files
-if args.recursive:
-    for root, dirs, f in os.walk(args.path):
-        for file in f:
-            if file.endswith('.mb'):
-                files.append(os.path.join(root, file))
-else:
-    for file in [f for f in os.listdir(args.path) if f.endswith('.mb')]:
-        files.append(os.path.join(args.path, file))
-        
-if not files:
-    print 'Maya file not found (.mb)'
-    sys.exit()
+content = [
+    {'s': args.content[i].replace('\\', '/'), 'r': args.content[i+1].replace('\\', '/')} 
+    for i in range(0, args.content.__len__(), 2)
+]
 
 for file in files:
     print '> Open file : {0}'.format(file)
