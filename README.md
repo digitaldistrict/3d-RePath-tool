@@ -73,7 +73,7 @@ It will open right version of Houdini for open and save your file.
 
 | Short   | Long        | Description                                                                                         |
 |---------|-------------|-----------------------------------------------------------------------------------------------------|
-| -p      | --path      | Define path of root folder /!\ Important use unix slashes /!\                                       |
+| -p      | --path      | Define path of root folder                                                                          |
 | -ba     | --backup    | Save file to name_edit.mb                                                                           |
 | -r      | --recursive | Recursive search scene file                                                                         |
 | -r      | --exclude   | Eclude folder by name; example: -e backup back_save, it will ignore "backup" folder and "back_save" |
