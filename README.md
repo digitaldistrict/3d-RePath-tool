@@ -76,6 +76,6 @@ It will open right version of Houdini for open and save your file.
 | -p      | --path      | Define path of root folder                                                                          |
 | -ba     | --backup    | Save file to name_edit.mb                                                                           |
 | -r      | --recursive | Recursive search scene file                                                                         |
-| -r      | --exclude   | Eclude folder by name; example: -e backup back_save, it will ignore "backup" folder and "back_save" |
+| -e      | --exclude   | Eclude folder by name; example: -e backup back_save, it will ignore "backup" folder and "back_save" |
 | -h      | --houdini   | Houdini folder (only for Houdini script)                                                            |
 | -c      | --content   | First element is search, second is replace; example: -c C:/ Q:/, it will replace C:/ by Q:/         |
