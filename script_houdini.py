@@ -67,7 +67,8 @@ def getHoudiniVersion(args):
     listHoudini = {}
     
     for d in dirs:
-        listHoudini[d.split(' ')[1].strip()] = os.path.join(args.houdini, d)
+        if os.path.isfile(os.path.join(args.houdini, d, 'bin', 'hython.exe')):
+            listHoudini[d.split(' ')[1].strip()] = os.path.join(args.houdini, d)
     
     if not listHoudini:
         print 'Houdini folder not found, use --houdini'
