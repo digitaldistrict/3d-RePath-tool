@@ -110,7 +110,7 @@ def selectHoudiniVersion(listHoudini, version):
         for key in listHoudini:
             sepDir = key.split('.')
             
-            if sepDir[0] == sepVer[0] and sepDir[1] == sepVar[1]:
+            if sepDir[0] == sepVer[0] and sepDir[1] == sepVer[1]:
                 return listHoudini[key]
             
     return False
@@ -136,7 +136,8 @@ for file in files:
     
     if not houdini:
         print 'Not find version Houdini {0}'.format(version)
-    
+        continue
+        
     houdini = os.path.join(houdini, 'bin', 'hython.exe')
     
     try:
