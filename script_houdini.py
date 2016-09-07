@@ -2,6 +2,7 @@ import argparse
 import sys
 import os
 import subprocess
+import time
 
 parser = argparse.ArgumentParser(description='Houdini Repath script')
 parser.add_argument(
@@ -28,6 +29,14 @@ parser.add_argument(
     default=False, 
     dest='recursive', 
     help='Recursive search hip file')
+parser.add_argument(
+    '--max', '-m',
+    action='store',
+    default=2,
+    dest='max',
+    type=int,
+    help='Maximum Houdini instance in parallel'
+)
 parser.add_argument(
     '--exclude', '-e', 
     nargs='+', 
@@ -123,26 +132,27 @@ content = [
     {'s': args.content[i].replace('\\', '/'), 'r': args.content[i+1].replace('\\', '/')} 
     for i in range(0, args.content.__len__(), 2)
 ]
-    
-for file in files:
+
+currentNum = 0 # current file pos
+Processes = [] # instance in progress
+
+def startScript(file):
     file = file.replace('\\', '/')
     version = getFileVersion(file)
     
     if not version:
         print 'Can\'t find version of {0}'.format(file)
-        continue
+        return False
     
     houdini = selectHoudiniVersion(listHoudini, version)
     
     if not houdini:
         print 'Not find version Houdini {0}'.format(version)
-        continue
+        return False
         
     houdini = os.path.join(houdini, 'bin', 'hython.exe')
     
-    try:
-        print 'start script', houdini
-        p = subprocess.Popen([houdini, '-c', """
+    return subprocess.Popen([houdini, '-c', """
 import hou
 import os
 import sys
@@ -172,8 +182,32 @@ else:
     
 sys.exit()
 """.format(f=file, c=content, b=args.backup)])
-        p.communicate()
-    except:
-        print 'Subprocess failed'
+
+def startNew():
+    global currentNum
+    global Processes
     
+    if currentNum < len(files):
+        proc = startScript(files[currentNum])
+        currentNum += 1
+        if proc:
+            Processes.append(proc)
+
+def checkRunning():
+    global currentNum
+    global Processes
+    
+    # remove ended processes
+    for p in range(len(Processes)-1,-1,-1):
+        if Processes[p].poll() is not None: 
+            del Processes[p]
+    
+    while (len(Processes) < args.max) and (currentNum < len(files)):
+      startNew()
+
+checkRunning()
+while (len(Processes) > 0):
+    time.sleep(0.1)
+    checkRunning() 
+
 sys.exit()
