@@ -35,8 +35,7 @@ parser.add_argument(
     default=2,
     dest='max',
     type=int,
-    help='Maximum Houdini instance in parallel'
-)
+    help='Maximum Houdini instance in parallel')
 parser.add_argument(
     '--exclude', '-e', 
     nargs='+', 

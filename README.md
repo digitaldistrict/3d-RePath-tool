@@ -17,16 +17,21 @@ Search and replace asset in 3D software (Maya, 3dsMax, Houdini).
 
 ## Maya
 
+- Python 2.7
 - Autodesk Maya 2016 SP4+
 - use script_maya.py
 
 ### How To Use
 
-- Find your Maya directory (by default C:\Program Files\Autodesk\Maya2016\bin)
 - Start command 
 ```
-pathToMaya\bin\mayapy.exe script_maya.py -h
+python script_maya.py -h
 ```
+
+### Set Maya Folder
+
+- Find your Maya directory (by default C:\Program Files\Autodesk\Maya2016\)
+- If Maya isn't here, add -ma --maya flag with right folder
 
 ### How To Verify
 
@@ -35,7 +40,7 @@ pathToMaya\bin\mayapy.exe script_maya.py -h
 ### Example
 
 ```
-pathToMaya\bin\mayapy.exe script_maya.py -p "C:\mayaScene" -r -c "C:\oldprojet" "C:\mayaScene" "D:\object" "C:\mayaScene\object"
+python script_maya.py -p "C:\mayaScene" -r -c "C:\oldprojet" "C:\mayaScene" "D:\object" "C:\mayaScene\object"
 ```
 Search into C:\mayaScene recursively maya scene, open them, search C:\oldproject or D:\object path, if it found them, then replace by C:\mayaScene or C:\mayaScene\object.
 
@@ -77,6 +82,7 @@ It will open right version of Houdini for open and save your file.
 | -ba     | --backup    | Save file to name_edit.mb                                                                           |
 | -r      | --recursive | Recursive search scene file                                                                         |
 | -e      | --exclude   | Eclude folder by name; example: -e backup back_save, it will ignore "backup" folder and "back_save" |
-| -h      | --houdini   | Houdini folder (only for Houdini script)                                                            |
-| -m      | --max       | Maximum instance in parallel (only for Houdini script)                                              |
+| -h      | --houdini   | Houdini folder                                                                                      |
+| -ma     | --maya      | Maya folder                                                                                         |
+| -m      | --max       | Maximum instance in parallel                                                                        |
 | -c      | --content   | First element is search, second is replace; example: -c C:/ Q:/, it will replace C:/ by Q:/         |
