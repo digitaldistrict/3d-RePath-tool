@@ -59,10 +59,14 @@ def getSceneFile(args):
                 
             for file in f:
                 if file.endswith('.mb'):
-                    files.append(os.path.join(root, file))
+                    el = root + '/' + file
+                    el = el.replace('\\', '/')
+                    files.append(el)
     else:
         for file in [f for f in os.listdir(args.path) if f.endswith('.mb')]:
-            files.append(os.path.join(args.path, file))
+            el = args.path + '/' + file
+            el = el.replace('\\', '/')
+            files.append(el)
 
     if not files:
         print 'Houdini file not found (.mb)'
@@ -111,6 +115,7 @@ try:
 except:
     print 'Cant open this file.'
     cmds.quit()
+    sys.exit()
 
 subdir = cmds.filePathEditor(query=True, listDirectories="")
 
@@ -130,6 +135,7 @@ if subdir:
             except:
                 print 'Cant find node path'
                 cmds.quit()
+                sys.exit()
 
             # repath them
             repath = d.replace(match['s'], match['r'])
@@ -139,6 +145,7 @@ if subdir:
             except:
                 print 'Cant replace path by {{0}}'.format(repath)
                 cmds.quit()
+                sys.exit()
 
     # rename current file
     if backup:
@@ -151,7 +158,8 @@ if subdir:
         pass
     
 cmds.quit()
-""".format(f=file, c=content, b=args.backup)], stderr=devnull, stdout=devnull)
+sys.exit()
+""".format(f=file, c=content, b=args.backup)])
 
 def startNew():
     global currentNum
