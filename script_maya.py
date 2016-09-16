@@ -117,6 +117,15 @@ except:
     cmds.quit()
     sys.exit()
 
+# disable reference
+refs = cmds.file(q=True, r=True)
+refsName = []
+
+for ref in refs:
+    namespace = cmds.referenceQuery(ref, referenceNode=True)
+    refsName.append(namespace)
+    cmds.file(unloadReference=namespace)
+
 subdir = cmds.filePathEditor(query=True, listDirectories="")
 
 if subdir:
@@ -146,6 +155,13 @@ if subdir:
                 print 'Cant replace path by {{0}}'.format(repath)
                 cmds.quit()
                 sys.exit()
+
+    try:
+        for namespace in refsName:
+            cmds.file(loadReference=namespace)
+    except:
+        print 'cant load reference'
+        pass
 
     # rename current file
     if backup:
