@@ -159,7 +159,7 @@ if subdir:
     
 cmds.quit()
 sys.exit()
-""".format(f=file, c=content, b=args.backup)])
+""".format(f=file, c=content, b=args.backup)], stderr=devnull, stdout=devnull)
 
 def startNew():
     global currentNum
