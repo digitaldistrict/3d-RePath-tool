@@ -156,12 +156,12 @@ if subdir:
                 cmds.quit()
                 sys.exit()
 
-    try:
-        for namespace in refsName:
+    # try to enable reference
+    for namespace in refsName:
+        try:
             cmds.file(loadReference=namespace)
-    except:
-        print 'cant load reference'
-        pass
+        except:
+            pass
 
     # rename current file
     if backup:
