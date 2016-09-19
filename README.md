@@ -19,6 +19,21 @@ Search and replace asset in 3D software (Maya, 3dsMax, Houdini, Nuke).
 
 - Max Application Menu > References > Asset Tracking
 
+### No GUI script
+
+- script_max.ms replace path at line 3, and edit DataPair for right replace.
+```
+/* you're path */
+theRootPath = "Q:\pathTo" 
+
+/* add or remove line for multiple replace (search is case sensitive) */
+edt = #(
+    DataPair find:"p:" replace:"q:\\",
+    DataPair find:"\\\\data-server" replace:"q:\\"
+)
+```
+- Open 3dsMax open script editor, paste content of script_max.ms and evaluate them
+
 ## Maya
 
 - Python 2.7
