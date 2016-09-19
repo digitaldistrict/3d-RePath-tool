@@ -69,12 +69,16 @@ def getSceneFile(args):
             files.append(el)
 
     if not files:
-        print 'Houdini file not found (.mb)'
+        print 'Maya file not found (.mb)'
         sys.exit()
         
     return files
 
+print 'Search in progress...'
+
 files = getSceneFile(args)
+
+print '{0} files founded'.format(files.__len__())
 
 # convert search replace by {'s': search, 'r': replace}
 content = [

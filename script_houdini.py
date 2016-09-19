@@ -123,8 +123,13 @@ def selectHoudiniVersion(listHoudini, version):
             
     return False
     
+
+print 'Search in progress...'
+
 files = getSceneFile(args)
 listHoudini = getHoudiniVersion(args)
+
+print '{0} files founded'.format(files.__len__())
 
 # convert search replace by {'s': search, 'r': replace}
 content = [
