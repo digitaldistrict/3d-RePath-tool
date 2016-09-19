@@ -1,5 +1,5 @@
 # 3d-RePath-tool
-Search and replace asset in 3D software (Maya, 3dsMax, Houdini).
+Search and replace asset in 3D software (Maya, 3dsMax, Houdini, Nuke).
 
 ## 3dsMax
 
@@ -14,6 +14,10 @@ Search and replace asset in 3D software (Maya, 3dsMax, Houdini).
 - Double click an path or write what you need to find
 - Fill the value "Replace" 
 - Start "RePath" for submit, but pay attention to manually backup your file
+
+### How To Verify
+
+- Max Application Menu > References > Asset Tracking
 
 ## Maya
 
@@ -73,16 +77,34 @@ python script_houdini.py -p "C:\houdini" -r -c "C:\oldprojet" "C:\houdini" "D:\o
 Search into C:\houdini recursively houdini scene, open them, replace all occurences C:\oldproject by C:\houdini and D:\object by C:\houdini\object.
 It will open right version of Houdini for open and save your file.
 
+## Nuke
 
-## Arguments for Maya and Houdini script
+- Python 2.7
+- use script_nuke.py
+
+### How To Use
+
+- start command
+```
+python script_nuke.py -h
+```
+
+### Example
+
+```
+python script_nuke.py -p "C:\nuke" -r -c "//data-server" "Q:" "P:" "Q:"
+```
+Search into C:\nuke recursively nuke scene, open them, replace all occurences //data-server by Q: and P: by Q:.
+
+## Arguments for Python script
 
 | Short   | Long        | Description                                                                                         |
 |---------|-------------|-----------------------------------------------------------------------------------------------------|
 | -p      | --path      | Define path of root folder                                                                          |
-| -ba     | --backup    | Save file to name_edit.mb                                                                           |
+| -ba     | --backup    | Save file to name_edit.ext                                                                          |
 | -r      | --recursive | Recursive search scene file                                                                         |
 | -e      | --exclude   | Eclude folder by name; example: -e backup back_save, it will ignore "backup" folder and "back_save" |
 | -h      | --houdini   | Houdini folder                                                                                      |
 | -ma     | --maya      | Maya folder                                                                                         |
-| -m      | --max       | Maximum instance in parallel                                                                        |
+| -m      | --max       | Maximum instance in parallel (Maya and Houdini)                                                     |
 | -c      | --content   | First element is search, second is replace; example: -c C:/ Q:/, it will replace C:/ by Q:/         |
